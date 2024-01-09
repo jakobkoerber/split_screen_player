@@ -22,7 +22,7 @@ class _BumbleBeeRemoteVideo extends StatefulWidget {
 
 class _BumbleBeeRemoteVideoState extends State<_BumbleBeeRemoteVideo> {
   late VideoPlayerController _controller;
-  late VideoPlayerController _controller2;
+  //late VideoPlayerController _controller2;
 
   @override
   void initState() {
@@ -30,31 +30,35 @@ class _BumbleBeeRemoteVideoState extends State<_BumbleBeeRemoteVideo> {
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
+      Uri.parse(
+          'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
-
+    /*
     _controller2 = VideoPlayerController.networkUrl(
       Uri.parse(
           'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4'),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
-
+    */
     _controller.addListener(() async {
       setState(() {});
     });
     _controller.setLooping(true);
-    _controller2.addListener(() {
+    /*_controller2.addListener(() {
       setState(() {});
     });
     _controller2.setVolume(0.0);
-    _controller2.setLooping(true);
-    Future.wait([_controller.initialize(), _controller2.initialize()]);
+    _controller2.setLooping(true);*/
+    _controller.initialize();
+    _controller.play();
+    //Future.wait([_controller.initialize(), _controller2.initialize()]);
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _controller2.dispose();
+    //_controller2.dispose();
     super.dispose();
   }
 
@@ -63,14 +67,14 @@ class _BumbleBeeRemoteVideoState extends State<_BumbleBeeRemoteVideo> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: <Widget>[
-        SplitScreenView(controller: _controller, controller2: _controller2),
+        SplitScreenView(controller: _controller/*, controller2: _controller2*/),
         ClosedCaption(text: _controller.value.caption.text),
         _ControlsOverlay(
           controller: _controller,
-          controller2: _controller2,
+          //controller2: _controller2,
         ),
         VideoProgressIndicator(_controller,
-            controller2: _controller2, allowScrubbing: true),
+            /*controller2: _controller2,*/ allowScrubbing: true),
       ],
     );
   }
@@ -79,7 +83,7 @@ class _BumbleBeeRemoteVideoState extends State<_BumbleBeeRemoteVideo> {
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({
     required this.controller,
-    required this.controller2,
+    //required this.controller2,
   });
 
   static const List<double> _examplePlaybackRates = <double>[
@@ -94,7 +98,7 @@ class _ControlsOverlay extends StatelessWidget {
   ];
 
   final VideoPlayerController controller;
-  final VideoPlayerController controller2;
+  //final VideoPlayerController controller2;
 
   @override
   Widget build(BuildContext context) {
@@ -119,14 +123,15 @@ class _ControlsOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            if (controller.value.isInitialized &&
+            /*if (controller.value.isInitialized &&
                 controller2.value.isInitialized) {
               if (controller.value.isPlaying && controller2.value.isPlaying) {
                 Future.wait([controller.pause(), controller2.pause()]);
               } else {
                 Future.wait([controller.play(), controller2.play()]);
               }
-            }
+            }*/
+            controller.value.isPlaying ? controller.play() : controller.pause();
           },
         ),
         Align(
@@ -135,10 +140,10 @@ class _ControlsOverlay extends StatelessWidget {
             initialValue: controller.value.playbackSpeed,
             tooltip: 'Playback speed',
             onSelected: (double speed) {
-              Future.wait([
-                controller.setPlaybackSpeed(speed),
-                controller2.setPlaybackSpeed(speed)
-              ]);
+              //Future.wait([
+                controller.setPlaybackSpeed(speed);//,
+                //controller2.setPlaybackSpeed(speed)
+              //]);
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<double>>[

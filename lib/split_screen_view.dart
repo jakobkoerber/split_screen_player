@@ -5,11 +5,11 @@ class SplitScreenView extends StatefulWidget {
   const SplitScreenView({
     super.key,
     required this.controller,
-    required this.controller2,
+    //required this.controller2,
   });
 
   final VideoPlayerController controller;
-  final VideoPlayerController controller2;
+  //final VideoPlayerController controller2;
 
   @override
   State<StatefulWidget> createState() => _SplitScreenViewState();
@@ -21,12 +21,13 @@ class _SplitScreenViewState extends State<SplitScreenView> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
             flex: (ratio * 100).toInt(),
             child: AspectRatio(
               aspectRatio: widget.controller.value.aspectRatio,
-              child: VideoPlayer(widget.controller),
+              child: VideoPlayer(widget.controller, true,),
             )),
         Draggable(
           feedback: Container(
@@ -50,8 +51,8 @@ class _SplitScreenViewState extends State<SplitScreenView> {
         Expanded(
             flex: 100 - (ratio * 100).toInt(),
             child: AspectRatio(
-              aspectRatio: widget.controller2.value.aspectRatio,
-              child: VideoPlayer(widget.controller2),
+              aspectRatio: widget.controller.value.aspectRatio,
+              child: VideoPlayer(widget.controller, false,),
             )),
       ],
     );

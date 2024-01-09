@@ -38,7 +38,7 @@ dependencies:
   video_player:
     git:
       url: git@github.com:jakobkoerber/packages.git
-      ref: video_player
+      ref: controller_two_videos
       path: packages/video_player/video_player
 
 dev_dependencies:

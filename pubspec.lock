@@ -209,8 +209,8 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/video_player/video_player"
-      ref: video_player
-      resolved-ref: "041e32ed098e7ae49a5aeee65d969ee3e20fe4f0"
+      ref: controller_two_videos
+      resolved-ref: "9f1bd9925f8099be606ec205cdea8246ea2d9acd"
       url: "git@github.com:jakobkoerber/packages.git"
     source: git
     version: "2.8.2"
